@@ -14,7 +14,7 @@ Info.propTypes = {
   icon: React.PropTypes.string,
   temp: React.PropTypes.number,
   wind: React.PropTypes.number,
-  press: React.PropTypes.string,
+  press: React.PropTypes.number,
 };
 
 export default Info;

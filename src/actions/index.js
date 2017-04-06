@@ -2,20 +2,13 @@ export const FETCH_WEATHER_REQUEST = 'FETCH_WEATHER_REQUEST';
 export const FETCH_WEATHER_SUCCESS = 'FETCH_WEATHER_SUCCESS';
 export const FETCH_WEATHER_FAILURE = 'FETCH_WEATHER_FAILURE';
 
-//const API_FORECAST = 'http://api.openweathermap.org/data/2.5/forecast?';
+export const FETCH_FORECAST_REQUEST = 'FETCH_FORECAST_REQUEST';
+export const FETCH_FORECAST_SUCCESS = 'FETCH_FORECAST_SUCCESS';
+
+const API_FORECAST = 'http://api.openweathermap.org/data/2.5/forecast?';
 const API_WEATHER = 'http://api.openweathermap.org/data/2.5/weather?';
 const APP_ID = '0aacc1877b95283c4f28bf4b02a5e5d9';
 const UNITS = 'metric';
-
-export const partialCopyObj = (obj, keys) => {
-  let newObj = {};
-  for (let key in obj) {
-    if(keys.indexOf(key) != -1)
-      newObj[key] = obj[key];
-  }
-  return newObj;
-};
-
 
 const fetchWeatherRequest = () => {
   return {
@@ -36,18 +29,50 @@ const fetchWeatherFailure = () => {
   };
 };
 
-export const fetchWeather = (id) => {
+export const fetchCurrentWeather = (id) => {
   return (dispatch) => {
     dispatch(fetchWeatherRequest());
 
-    const requestUrl = API_WEATHER
-      .concat(`APPID=${APP_ID}`)
-      .concat(`&units=${UNITS}`)
-      .concat(`&id=${id}`);
+    const requestUrl = API_WEATHER.concat(`APPID=${APP_ID}&units=${UNITS}&id=${id}`);
 
     return fetch(requestUrl)
       .then(response => response.json())
       .then(json => dispatch(fetchWeatherSuccess(json)))
+      .then(() => dispatch(fetchForecast(id)))
+      .catch(function(error) { 
+        console.log(error); 
+        dispatch(fetchWeatherFailure());  
+      });
+  };
+};
+
+
+const fetchForecastRequest = (data) => {
+  return {
+    type: FETCH_FORECAST_REQUEST,
+    data,
+  };
+};
+
+const fetchForecastSuccess = (data) => {
+  const forecast = data.list;
+  const id = data.city.id;
+  return {
+    type: FETCH_FORECAST_SUCCESS,
+    forecast,
+    id,
+  };
+};
+
+const fetchForecast = (id) => {
+  return (dispatch) => {
+    dispatch(fetchForecastRequest());
+
+    const requestUrl = API_FORECAST.concat(`APPID=${APP_ID}&units=${UNITS}&id=${id}`);
+
+    return fetch(requestUrl)
+      .then(response => response.json())
+      .then(json => dispatch(fetchForecastSuccess(json)))
       .catch(function(error) { 
         console.log(error); 
         dispatch(fetchWeatherFailure());  

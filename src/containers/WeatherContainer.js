@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Weather from '../components/Weather';
-import { fetchWeather } from '../actions';
+import { fetchCurrentWeather } from '../actions';
 
 class WeatherContainer extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class WeatherContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchWeather(498817));
+    this.props.dispatch(fetchCurrentWeather(498817));
   }
 
   // componentWillReceiveProps(nextProps) {
