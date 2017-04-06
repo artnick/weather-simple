@@ -1,8 +1,9 @@
 import React from 'react';
+import WeatherContainer from '../containers/WeatherContainer';
 
 const App = () => (
-  <div className='app'>
-    'weather'
+  <div className='app container'>
+    <WeatherContainer/>
   </div>
 );
 

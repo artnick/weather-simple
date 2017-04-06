@@ -14,7 +14,10 @@ const weather = (state = initialState, action) => {
     case FETCH_WEATHER_REQUEST:
       return state;
     case FETCH_WEATHER_SUCCESS:
-      return state;
+      return {
+        ...state,
+        data: [...state.data, action.data],
+      };
     case FETCH_WEATHER_FAILURE:
       return state;
     default:

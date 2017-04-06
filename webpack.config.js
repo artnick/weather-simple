@@ -25,7 +25,7 @@ const commonConfig = merge([
 
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'YDisk Explorer',
+        title: 'Weather',
         template: 'index.ejs'
       }),
     ],

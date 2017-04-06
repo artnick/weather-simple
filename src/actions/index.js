@@ -2,7 +2,10 @@ export const FETCH_WEATHER_REQUEST = 'FETCH_WEATHER_REQUEST';
 export const FETCH_WEATHER_SUCCESS = 'FETCH_WEATHER_SUCCESS';
 export const FETCH_WEATHER_FAILURE = 'FETCH_WEATHER_FAILURE';
 
-const API_WEATHER = 'http://api.openweathermap.org/data/2.5/forecast'
+//const API_FORECAST = 'http://api.openweathermap.org/data/2.5/forecast?';
+const API_WEATHER = 'http://api.openweathermap.org/data/2.5/weather?';
+const APP_ID = '0aacc1877b95283c4f28bf4b02a5e5d9';
+const UNITS = 'metric';
 
 export const partialCopyObj = (obj, keys) => {
   let newObj = {};
@@ -20,12 +23,10 @@ const fetchWeatherRequest = () => {
   };
 };
 
-const fetchWeatherSuccess = (json) => {
-  
+const fetchWeatherSuccess = (data) => {
   return {
     type: FETCH_WEATHER_SUCCESS,
-    list,
-    currentPath,
+    data,
   };
 };
 
@@ -35,11 +36,16 @@ const fetchWeatherFailure = () => {
   };
 };
 
-export function fetchWeather(id) {
-  return (dispatch, getState) => {
+export const fetchWeather = (id) => {
+  return (dispatch) => {
     dispatch(fetchWeatherRequest());
 
-    return fetch(API_WEATHER)
+    const requestUrl = API_WEATHER
+      .concat(`APPID=${APP_ID}`)
+      .concat(`&units=${UNITS}`)
+      .concat(`&id=${id}`);
+
+    return fetch(requestUrl)
       .then(response => response.json())
       .then(json => dispatch(fetchWeatherSuccess(json)))
       .catch(function(error) { 
@@ -47,4 +53,4 @@ export function fetchWeather(id) {
         dispatch(fetchWeatherFailure());  
       });
   };
-}
+};
