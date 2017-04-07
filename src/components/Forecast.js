@@ -37,23 +37,35 @@ Tab.propTypes = {
   isActive: React.PropTypes.bool,
 };
 
-const Content = ({ activeTab, forecast=[] }) => {
-  const rows = [];
-  rows.push(<ForecastRow forecast={forecast.slice(0,FORECAST_PER_DAY)}/>);
-  const start = (DAYS_FORECAST * FORECAST_PER_DAY - forecast.length);
-  for(let i = 1; i < DAYS_FORECAST; i++) {
-    rows.push(<ForecastRow forecast={forecast.slice(
-      FORECAST_PER_DAY*i - start,
-      FORECAST_PER_DAY*i - start + FORECAST_PER_DAY
-    )}/>);
+class Content extends React.Component {
+  constructor(props) {
+    super(props);
+    this.rows = [];
   }
-  return (
-    <div className='container-fluid'>
-      {rows[activeTab]} 
-    </div>
-  );
-};
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.forecast.length != this.props.forecast.length){
+      this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(0,FORECAST_PER_DAY)}/>);
+      const offset = nextProps.forecast.findIndex((item, ind, array)=> moment(item.dt_txt).weekday() != moment(array[0].dt_txt).weekday());
+      for(let i = 0; i < DAYS_FORECAST; i++) {
+        this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(
+          FORECAST_PER_DAY*i + offset,
+          FORECAST_PER_DAY*i + offset + FORECAST_PER_DAY
+        )}/>);
+      }
+    }
+  }
+
+  render() {
+    return <div className='container-fluid'>
+      {this.rows[this.props.activeTab]} 
+    </div>;
+  }
+}
+
+Content.defaultProps = {
+  forecast: [],
+};
 
 Content.propTypes = {
   activeTab: React.PropTypes.number,
@@ -65,6 +77,7 @@ class Forecast extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.days = [];
+    console.log(moment(this.props.time).weekday());
     for(let i = 0; i < DAYS_FORECAST; i++) {
       this.days.push(moment(this.props.time).add(i, 'day'));
     }
