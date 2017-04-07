@@ -25,8 +25,8 @@ Tabs.propTypes = {
 
 const Tab = ({ isActive, handleClick, day }) => {
   return (
-    <li onClick={handleClick} className={isActive ? 'active' : null}>
-      <a href="#">{day.format('ddd, MMM Do')}</a>
+    <li onClick={(e) => {e.preventDefault(); handleClick();}} className={isActive ? 'active' : null}>
+      <a href="#" >{day.format('ddd, MMM Do')}</a>
     </li>
   );
 };

@@ -1,8 +1,16 @@
 @import 'bootstrap-custom'
 $small-spinner-size: 28px
+
 *
   box-sizing: border-box
-  
+
+a
+  color: #428bca
+  text-decoration: none
+
+small
+  color: #555555
+
 .spinner
   display: inline-block
   background-image: url("../images/spinner.gif")
@@ -13,11 +21,10 @@ $small-spinner-size: 28px
     width: $small-spinner-size
     height: $small-spinner-size
 
-.info
-
 .row > .info
   display: inline-block
   @extend .col-sm-1
+
 
 .weather-icon
   display: inline-block
