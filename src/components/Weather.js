@@ -2,11 +2,11 @@ import React from 'react';
 import CityWeather from './CityWeather';
 
 const Weather = ({ data=[], time }) => (
-  <ul className='row'>
+  <div className=''>
     {data.map((city) => (
       <CityWeather key={city.id} data={city} time={time}/>
     ))}
-  </ul>
+  </div>
 );
 
 Weather.propTypes = {

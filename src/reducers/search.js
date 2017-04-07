@@ -1,4 +1,7 @@
-const initialState = {};
+const initialState = {
+  isSearching: false,
+  results: [],
+};
 
 const search = (state = initialState, action) => {
   switch (action.type) {
