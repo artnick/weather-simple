@@ -3,6 +3,8 @@ import {
   REMOVE_CITY,
 } from '../actions/';
 
+import { removeCity } from './helpers';
+
 const initialState = { 
   useGeoLocation: false,
   cities: [],
@@ -16,7 +18,10 @@ const settings = (state = initialState, action) => {
         cities: [...state.cities, action.id],
       };
     case REMOVE_CITY:
-      return state;
+      return {
+        ...state,
+        cities: removeCity(state.cities, action),
+      };
     default:
       return state;
   }

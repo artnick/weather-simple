@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Weather from '../components/Weather';
-import { fetchCurrentWeather } from '../actions';
+import { fetchCurrentWeather, removeCity } from '../actions';
 
 class WeatherContainer extends React.Component {
   constructor(props) {
@@ -10,28 +10,40 @@ class WeatherContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchCurrentWeather(498817));
+    this.props.cities.forEach((id) =>
+      this.props.fetchCurrentWeather(id)
+    );
   }
 
-  // componentWillReceiveProps(nextProps) {
-  // }
-
   render() {
-    return <Weather data={this.props.data} time={this.time}/>;
+    return <Weather data={this.props.data} time={this.time} onRemoveCity={this.props.removeCity}/>;
   }
 }
 
 WeatherContainer.propTypes = {
-  dispatch: React.PropTypes.func,
+  removeCity: React.PropTypes.func,
+  fetchCurrentWeather: React.PropTypes.func,
   data: React.PropTypes.array,
+  cities: React.PropTypes.array,
 };
 
 const mapStateToProps = (state) => {
-  const weather = state.weather;
   return {
-    data: weather.data,
+    data: state.weather.data,
+    cities: state.settings.cities,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeCity: (id) => {
+      dispatch(removeCity(id));
+    },
+    fetchCurrentWeather: (id) => {
+      dispatch(fetchCurrentWeather(id));
+    },
   };
 };
 
 
-export default connect(mapStateToProps)(WeatherContainer);
+export default connect(mapStateToProps,mapDispatchToProps)(WeatherContainer);

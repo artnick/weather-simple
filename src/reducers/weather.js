@@ -4,23 +4,14 @@ import {
   FETCH_WEATHER_FAILURE,
   FETCH_FORECAST_REQUEST,
   FETCH_FORECAST_SUCCESS,
+  REMOVE_CITY,
 } from '../actions/';
+import { addForecastToCity, removeCityFromWeather } from './helpers';
 
 const initialState = { 
   data: [],
 };
 
-function addForecastToCity(array, action) {
-  return array.map( (item) => {
-    if(item.id !== action.id) {
-      return item;
-    }
-    return {
-      ...item,
-      forecast: action.forecast,
-    };    
-  });
-}
 
 const weather = (state = initialState, action) => {
   switch (action.type) {
@@ -39,6 +30,11 @@ const weather = (state = initialState, action) => {
       return {
         ...state,
         data: addForecastToCity(state.data, action),
+      };
+    case REMOVE_CITY:
+      return {
+        ...state,
+        data: removeCityFromWeather(state.data, action),
       };
     default:
       return state;

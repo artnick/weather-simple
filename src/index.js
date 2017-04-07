@@ -6,7 +6,9 @@ import configureStore from './configureStore';
 import App from './components/App';
 import './styles/main.sass';
 
-const persistedSettings = localStorage.getItem('settings') ? JSON.parse(localStorage.getItem('settings')) : {};
+const persistedSettings = localStorage.getItem('settings') ? 
+  JSON.parse(localStorage.getItem('settings')) : 
+  {cities:[], useGeoLocation: true};
 
 const store = configureStore({settings: persistedSettings});
 
