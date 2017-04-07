@@ -15,7 +15,7 @@ const settings = (state = initialState, action) => {
     case ADD_CITY:
       return {
         ...state,
-        cities: [...state.cities, action.id],
+        cities: [...new Set([...state.cities, action.id])],
       };
     case REMOVE_CITY:
       return {

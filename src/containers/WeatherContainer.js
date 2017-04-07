@@ -16,6 +16,12 @@ class WeatherContainer extends React.Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.cities.length > this.props.cities.length){
+      this.props.fetchWeather(nextProps.cities[nextProps.cities.length-1]);
+    }
+  }
+
   render() {
     return <Weather data={this.props.data} time={this.time} onRemoveCity={this.props.removeCity}/>;
   }

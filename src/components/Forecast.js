@@ -45,7 +45,7 @@ class Content extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.forecast.length != this.props.forecast.length){
-      this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(0,FORECAST_PER_DAY)}/>);
+      this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(0, FORECAST_PER_DAY)}/>);
       const offset = nextProps.forecast.findIndex((item, ind, array)=> moment(item.dt_txt).weekday() != moment(array[0].dt_txt).weekday());
       for(let i = 0; i < DAYS_FORECAST; i++) {
         this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(
