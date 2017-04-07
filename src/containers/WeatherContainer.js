@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Weather from '../components/Weather';
-import { fetchCurrentWeather, removeCity } from '../actions';
+import { fetchWeather } from '../actions/weatherActions';
+import { removeCity } from '../actions/settingsActions';
 
 class WeatherContainer extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class WeatherContainer extends React.Component {
 
   componentDidMount() {
     this.props.cities.forEach((id) =>
-      this.props.fetchCurrentWeather(id)
+      this.props.fetchWeather(id)
     );
   }
 
@@ -22,7 +23,7 @@ class WeatherContainer extends React.Component {
 
 WeatherContainer.propTypes = {
   removeCity: React.PropTypes.func,
-  fetchCurrentWeather: React.PropTypes.func,
+  fetchWeather: React.PropTypes.func,
   data: React.PropTypes.array,
   cities: React.PropTypes.array,
 };
@@ -39,8 +40,8 @@ const mapDispatchToProps = (dispatch) => {
     removeCity: (id) => {
       dispatch(removeCity(id));
     },
-    fetchCurrentWeather: (id) => {
-      dispatch(fetchCurrentWeather(id));
+    fetchWeather: (id) => {
+      dispatch(fetchWeather(id));
     },
   };
 };

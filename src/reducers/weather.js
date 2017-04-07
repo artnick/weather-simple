@@ -4,8 +4,8 @@ import {
   FETCH_WEATHER_FAILURE,
   FETCH_FORECAST_REQUEST,
   FETCH_FORECAST_SUCCESS,
-  REMOVE_CITY,
-} from '../actions/';
+} from '../actions/weatherActions.js';
+import { REMOVE_CITY } from '../actions/settingsActions';
 import { addForecastToCity, removeCityFromWeather } from './helpers';
 
 const initialState = { 

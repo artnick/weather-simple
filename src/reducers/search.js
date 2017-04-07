@@ -2,7 +2,7 @@ import {
   SEARCH_REQUEST, 
   SEARCH_SUCCESS, 
   SEARCH_FAILURE,
-} from '../actions';
+} from '../actions/searchActions';
 
 const initialState = {
   isSearching: false,

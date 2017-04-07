@@ -1,7 +1,7 @@
 import { 
   ADD_CITY, 
   REMOVE_CITY,
-} from '../actions/';
+} from '../actions/settingsActions';
 
 import { removeCity } from './helpers';
 
