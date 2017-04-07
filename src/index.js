@@ -6,8 +6,13 @@ import configureStore from './configureStore';
 import App from './components/App';
 import './styles/main.sass';
 
+const persistedSettings = localStorage.getItem('settings') ? JSON.parse(localStorage.getItem('settings')) : {};
 
-const store = configureStore();
+const store = configureStore({settings: persistedSettings});
+
+store.subscribe(() => {
+  localStorage.setItem('settings', JSON.stringify(store.getState().settings));
+});
 
 const render = (Component) => {
   ReactDOM.render(
