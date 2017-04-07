@@ -6,6 +6,7 @@ import { fetchCurrentWeather } from '../actions';
 class WeatherContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.time = new Date();
   }
 
   componentDidMount() {
@@ -16,7 +17,7 @@ class WeatherContainer extends React.Component {
   // }
 
   render() {
-    return <Weather data={this.props.data} />;
+    return <Weather data={this.props.data} time={this.time}/>;
   }
 }
 
