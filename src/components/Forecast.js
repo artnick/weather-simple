@@ -40,20 +40,15 @@ Tab.propTypes = {
 class Content extends React.Component {
   constructor(props) {
     super(props);
-    this.rows = [];
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.forecast.length != this.props.forecast.length){
-      this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(0, FORECAST_PER_DAY)}/>);
-      const offset = nextProps.forecast.findIndex((item, ind, array)=> moment(item.dt_txt).weekday() != moment(array[0].dt_txt).weekday());
-      for(let i = 0; i < DAYS_FORECAST; i++) {
-        this.rows.push(<ForecastRow forecast={nextProps.forecast.slice(
-          FORECAST_PER_DAY*i + offset,
-          FORECAST_PER_DAY*i + offset + FORECAST_PER_DAY
-        )}/>);
-      }
-    }
+    const offset = this.props.forecast.findIndex((item, ind, array)=> moment(item.dt_txt).isAfter(array[0].dt_txt, 'day'));
+    this.rows =  Array(DAYS_FORECAST).fill(0).map((item, index) => {
+      if(index == 0)
+        return <ForecastRow forecast={this.props.forecast.slice(0, FORECAST_PER_DAY)}/>;
+      return <ForecastRow forecast={this.props.forecast.slice(
+        FORECAST_PER_DAY * (index-1) + offset,
+        FORECAST_PER_DAY * index + offset,
+      )}/>;
+    });
   }
 
   render() {
@@ -63,10 +58,6 @@ class Content extends React.Component {
   }
 }
 
-Content.defaultProps = {
-  forecast: [],
-};
-
 Content.propTypes = {
   activeTab: React.PropTypes.number,
   forecast: React.PropTypes.array,
@@ -75,13 +66,9 @@ Content.propTypes = {
 class Forecast extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.days = [];
-    console.log(moment(this.props.time).weekday());
-    for(let i = 0; i < DAYS_FORECAST; i++) {
-      this.days.push(moment(this.props.time).add(i, 'day'));
-    }
     this.state = {activeTab: 0};
+    this.days = Array(DAYS_FORECAST).fill(0).map((item, index) => moment(this.props.time).add(index, 'day'));
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(tab) {

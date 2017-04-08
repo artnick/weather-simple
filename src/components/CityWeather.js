@@ -7,7 +7,7 @@ const CityWeather = ({ data, time, onRemoveCity }) => (
     <div className="panel-body">
       <h2>{`${data.name}`}</h2>
       <Info icon={data.weather[0].icon} temp={data.main.temp} wind={data.wind.speed} press={data.main.pressure}/>
-      <Forecast time={time} data={data.forecast}/>
+      {data.forecast ? <Forecast time={time} data={data.forecast}/> : null}
       <button onClick={()=>onRemoveCity(data.id)} type="button" className="close" aria-hidden="true">&times;</button>
     </div>
   </div>
