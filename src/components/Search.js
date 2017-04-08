@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from './Spinner';
 
 class Search extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class Search extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -19,15 +21,19 @@ class Search extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-    if(this.state.value) {
+    if(this.state.value.length > 2) {
       this.setState({showResults: true});
       this.props.search(this.state.value);
     }
   }
 
+  handleBlur() {
+    this.setState({showResults: false});
+  }
+
   handleSelect(event, id) {
     event.preventDefault();
-    //this.setState({showResults: false});
+    this.setState({showResults: false});
     this.props.addCity(id);
   }
 
@@ -36,16 +42,18 @@ class Search extends React.Component {
       <div className="search panel panel-default">
         <div className="panel-heading">
           <form className="search-form" onSubmit={this.handleSearch}>
-            <input className="form-control" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Search city"/>
+            <input className="form-control" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Search city" onBlur={this.handleBlur}/>
             <select 
-              multiple 
-              className={`select-city form-control ${this.state.showResults && this.props.results.length > 0 ? '' : 'hidden'}`
+              multiple
+              size={this.props.results.length} 
+              className={`select-city form-control ${this.state.showResults && this.props.results.length > 0 ? 'select-city_show' : ''}`
             }>
               {this.props.results.map( (city, index) => 
                 <option onClick={(event) => this.handleSelect(event, city.id)} key={index}>{city.name + ', ' + city.sys.country + ' ' + city.main.temp + '°C'}</option>
               )}
             </select>
-            <input className="btn btn-primary" type="submit" value="Search" />
+            <input className="btn btn-primary" type="submit" value="Search" onBlur={this.handleBlur}/>
+            <Spinner visible={this.props.isSearching}/>
           </form>
         </div>
       </div>

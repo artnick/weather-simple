@@ -20,6 +20,7 @@ const search = (state = initialState, action) => {
     case SEARCH_SUCCESS:
       return {
         ...state,
+        isSearching: false,
         results: action.results,
       };
     case SEARCH_FAILURE:

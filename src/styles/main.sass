@@ -23,20 +23,26 @@ small
 .select-city
   position: absolute
   border-top: none
-  box-shadow: none
-  top: 29px
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+  top: 30px
   left: 0
   z-index: 100
+  visibility: hidden;
+  opacity: 0
+  transition: visibility 0.5s, opacity 0.2s linear;
+  &_show
+    visibility: visible
+    opacity: 1
 
 .search .btn
-  margin-left: 5px
+  margin: 0 5px
 
 .spinner
   display: inline-block
   background-image: url("../images/spinner.gif")
   background-size: cover
-  vertical-align: bottom
-  float: right
+  vertical-align: middle
   &_small
     width: $small-spinner-size
     height: $small-spinner-size

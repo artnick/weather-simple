@@ -11,7 +11,6 @@ const searchRequest = () => {
 };
 
 const searchSuccess = ({list: results}) => {
-  console.log(results);
   return {
     type: SEARCH_SUCCESS,
     results,
