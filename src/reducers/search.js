@@ -7,6 +7,7 @@ import {
 const initialState = {
   isSearching: false,
   results: [],
+  error: '',
 };
 
 const search = (state = initialState, action) => {
@@ -16,6 +17,7 @@ const search = (state = initialState, action) => {
         ...state,
         isSearching: true,
         results: [],
+        error: '',
       };
     case SEARCH_SUCCESS:
       return {
@@ -28,6 +30,7 @@ const search = (state = initialState, action) => {
         ...state,
         isSearching: false,
         results: [],
+        error: action.error,
       };
     default:
       return state;

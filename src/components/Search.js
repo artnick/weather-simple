@@ -21,7 +21,7 @@ class Search extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-    if(this.state.value.length > 2) {
+    if(this.state.value.length > 0) {
       this.setState({showResults: true});
       this.props.search(this.state.value);
     }
@@ -49,11 +49,14 @@ class Search extends React.Component {
               className={`select-city form-control ${this.state.showResults && this.props.results.length > 0 ? 'select-city_show' : ''}`
             }>
               {this.props.results.map( (city, index) => 
-                <option onClick={(event) => this.handleSelect(event, city.id)} key={index}>{city.name + ', ' + city.sys.country + ' ' + city.main.temp + '°C'}</option>
+                <option onClick={(event) => this.handleSelect(event, city.id)} key={index}>
+                  {city.name + ', ' + city.sys.country + ' ' + city.main.temp + '°C'}
+                </option>
               )}
             </select>
-            <input className="btn btn-primary" type="submit" value="Search" onBlur={this.handleBlur}/>
+            <input className="btn btn-primary" type="submit" value="Search" onBlur={this.handleBlur} disabled={!this.state.value}/>
             <Spinner visible={this.props.isSearching}/>
+            <span className='text-danger'>{this.props.error}</span> 
           </form>
         </div>
       </div>
@@ -64,6 +67,7 @@ class Search extends React.Component {
 Search.propTypes = {
   isSearching: React.PropTypes.bool,
   results: React.PropTypes.array,
+  error: React.PropTypes.string,
   search: React.PropTypes.func,
   addCity: React.PropTypes.func,
 };

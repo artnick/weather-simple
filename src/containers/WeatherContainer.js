@@ -7,25 +7,28 @@ import { removeCity, getUserLocation } from '../actions/settingsActions';
 class WeatherContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.time = new Date();
   }
 
   componentDidMount() {
+    //add city to setting if running in first time
     if(this.props.useLocation)
       this.props.getUserLocation();
+
+    //fetch weather for cities in settings
     this.props.cities.forEach((id) =>
       this.props.fetchWeather(id)
     );
   }
 
   componentWillReceiveProps(nextProps) {
+    //fetch weather if new city was added
     if(nextProps.cities.length > this.props.cities.length){
       this.props.fetchWeather(nextProps.cities[nextProps.cities.length-1]);
     }
   }
 
   render() {
-    return <Weather data={this.props.data} time={this.time} onRemoveCity={this.props.removeCity}/>;
+    return <Weather data={this.props.data} onRemoveCity={this.props.removeCity}/>;
   }
 }
 

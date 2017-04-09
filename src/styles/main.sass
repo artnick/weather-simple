@@ -1,5 +1,6 @@
 @import 'bootstrap-custom'
 $small-spinner-size: 28px
+$big-spinner-size: 60px
 
 *
   box-sizing: border-box
@@ -46,6 +47,12 @@ small
   &_small
     width: $small-spinner-size
     height: $small-spinner-size
+  &_big
+    width: $big-spinner-size
+    height: $big-spinner-size
+
+.forecast
+  margin-top: 15px
 
 .info
   display: inline-block
@@ -59,12 +66,14 @@ small
     position: absolute
     right: 5px
     top: 5px
-
+  .spinner
+    text-align: center
+    
 .current-weather
   h2
     margin: 5px 10px 10px
     small
-      font-size: 14px
+      font-size: 18px
   h3
     display: inline-block
     font-size: 30px
@@ -78,4 +87,5 @@ small
   display: block
   width: 50px
   height: 50px
+
 

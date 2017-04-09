@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
   return {
     isSearching: search.isSearching,
     results: search.results,
+    error: search.error,
   };
 };
 

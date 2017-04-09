@@ -3,7 +3,7 @@ import React from 'react';
 const Info = ({ icon, temp, wind, press, hour }) => {
   const iconStyle = {backgroundImage: `url(http://openweathermap.org/img/w/${icon}.png)`};
   return <div className='info'>
-    <span>{hour ? hour : null}</span><br/>
+    <span>{hour}</span><br/>
     <i className='weather-icon' style={iconStyle}></i>
     <small><b>{Math.floor(temp)} °C</b></small><br/>
     <small>{Math.floor(wind)} m/s</small><br/>

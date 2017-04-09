@@ -17,9 +17,10 @@ const searchSuccess = ({list: results}) => {
   };
 };
 
-const searchFailure = () => {
+const searchFailure = (error) => {
   return {
     type: SEARCH_FAILURE,
+    error,
   };
 };
 
@@ -31,10 +32,17 @@ export const searchCity = (query) => {
 
     return fetch(requestUrl)
       .then(response => response.json())
-      .then(json => dispatch(searchSuccess(json)))
+      .then(json => {
+        if(json.cod != 200)
+          dispatch(searchFailure(json.message[0].toUpperCase() + json.message.slice(1)));
+        else
+          if(json.count > 0)
+            dispatch(searchSuccess(json));
+          else
+            dispatch(searchFailure('Not found'));
+      })
       .catch(function(error) { 
-        console.log(error); 
-        dispatch(searchFailure());  
+        console.log(error);  
       });
   };
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Spinner = ({ size = 'small', visible }) => (
+const Spinner = ({ size = 'small', visible = true }) => (
   <div className={`spinner spinner_${size} ${visible ? '' : 'hidden'}`}></div>
 );
 

@@ -1,17 +1,16 @@
 import React from 'react';
 import CityWeather from './CityWeather';
 
-const Weather = ({ data=[], time, onRemoveCity }) => (
+const Weather = ({ data=[], onRemoveCity }) => (
   <div className=''>
     {data.map((city) => (
-      <CityWeather key={city.id} data={city} time={time} onRemoveCity={onRemoveCity}/>
+      <CityWeather key={city.id} data={city} onRemoveCity={onRemoveCity}/>
     ))}
   </div>
 );
 
 Weather.propTypes = {
   data: React.PropTypes.array,
-  time: React.PropTypes.object,
   onRemoveCity: React.PropTypes.func,
 };
 

@@ -41,9 +41,14 @@ class Content extends React.Component {
   constructor(props) {
     super(props);
     const offset = this.props.forecast.findIndex((item, ind, array)=> moment(item.dt_txt).isAfter(array[0].dt_txt, 'day'));
+
+    //parsed array divided by day
     this.rows =  Array(DAYS_FORECAST).fill(0).map((item, index) => {
+
+      //forecast for current day includes same forecast for tomorrow
       if(index == 0)
         return <ForecastRow forecast={this.props.forecast.slice(0, FORECAST_PER_DAY)}/>;
+
       return <ForecastRow forecast={this.props.forecast.slice(
         FORECAST_PER_DAY * (index-1) + offset,
         FORECAST_PER_DAY * index + offset,
@@ -67,7 +72,11 @@ class Forecast extends React.Component {
   constructor(props) {
     super(props);
     this.state = {activeTab: 0};
-    this.days = Array(DAYS_FORECAST).fill(0).map((item, index) => moment(this.props.time).add(index, 'day'));
+
+    //array of dates for 5 days forecast
+    this.days = Array(DAYS_FORECAST).fill(0).map((item, index) => 
+      moment(this.props.data[0].dt_txt).add(index, 'day')
+    );
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -77,7 +86,7 @@ class Forecast extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='forecast'>
         <Tabs days={this.days} activeTab={this.state.activeTab} changeTab={this.handleClick} />
         <Content activeTab={this.state.activeTab} forecast={this.props.data}/>
       </div>
@@ -87,7 +96,6 @@ class Forecast extends React.Component {
 
 Forecast.propTypes = {
   data: React.PropTypes.array,
-  time: React.PropTypes.object,
 };
 
 export default Forecast;
