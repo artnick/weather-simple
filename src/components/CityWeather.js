@@ -1,12 +1,18 @@
 import React from 'react';
-import Info from './Info';
 import Forecast from './Forecast';
+import CurrentWeather from './CurrentWeather';
 
 const CityWeather = ({ data, time, onRemoveCity }) => (
   <div className="city-weather panel panel-default">
     <div className="panel-body">
-      <h2>{`${data.name}`}</h2>
-      <Info icon={data.weather[0].icon} temp={data.main.temp} wind={data.wind.speed} press={data.main.pressure}/>
+      <CurrentWeather
+        city={`${data.name}, ${data.sys.country}`}
+        description={data.weather[0].description} 
+        icon={data.weather[0].icon} 
+        temp={data.main.temp} 
+        wind={data.wind.speed} 
+        press={data.main.pressure}
+      />
       {data.forecast ? <Forecast time={time} data={data.forecast}/> : null}
       <button onClick={()=>onRemoveCity(data.id)} type="button" className="close" aria-hidden="true">&times;</button>
     </div>

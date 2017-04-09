@@ -5,9 +5,9 @@ const Info = ({ icon, temp, wind, press, hour }) => {
   return <div className='info'>
     <span>{hour ? hour : null}</span><br/>
     <i className='weather-icon' style={iconStyle}></i>
-    <small>{temp} °C</small><br/>
-    <small>{wind} m/s</small><br/>
-    <small>{press}</small><br/>
+    <small><b>{Math.floor(temp)} °C</b></small><br/>
+    <small>{Math.floor(wind)} m/s</small><br/>
+    <small>{Math.floor(press)}</small><br/>
   </div>;
 };
 
