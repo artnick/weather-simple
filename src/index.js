@@ -8,7 +8,7 @@ import './styles/main.sass';
 
 const persistedSettings = localStorage.getItem('settings') ? 
   JSON.parse(localStorage.getItem('settings')) : 
-  {cities:[], useGeoLocation: true};
+  {cities:[], useLocation: true};
 
 const store = configureStore({settings: persistedSettings});
 

@@ -26,10 +26,9 @@ const fetchWeatherFailure = () => {
   };
 };
 
-const fetchForecastRequest = (data) => {
+const fetchForecastRequest = () => {
   return {
     type: FETCH_FORECAST_REQUEST,
-    data,
   };
 };
 

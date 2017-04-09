@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Weather from '../components/Weather';
 import { fetchWeather } from '../actions/weatherActions';
-import { removeCity } from '../actions/settingsActions';
+import { removeCity, getUserLocation } from '../actions/settingsActions';
 
 class WeatherContainer extends React.Component {
   constructor(props) {
@@ -11,6 +11,8 @@ class WeatherContainer extends React.Component {
   }
 
   componentDidMount() {
+    if(this.props.useLocation)
+      this.props.getUserLocation();
     this.props.cities.forEach((id) =>
       this.props.fetchWeather(id)
     );
@@ -30,14 +32,17 @@ class WeatherContainer extends React.Component {
 WeatherContainer.propTypes = {
   removeCity: React.PropTypes.func,
   fetchWeather: React.PropTypes.func,
+  getUserLocation: React.PropTypes.func,
   data: React.PropTypes.array,
   cities: React.PropTypes.array,
+  useLocation: React.PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
   return {
     data: state.weather.data,
     cities: state.settings.cities,
+    useLocation: state.settings.useLocation,
   };
 };
 
@@ -48,6 +53,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchWeather: (id) => {
       dispatch(fetchWeather(id));
+    },
+    getUserLocation: () => {
+      dispatch(getUserLocation());
     },
   };
 };
